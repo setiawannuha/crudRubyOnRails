@@ -1,0 +1,77 @@
+<%= render 'templates/navigation' %>
+<div class="container p-4">
+    <h2>Data Users</h2>
+    <div class="card">
+        <div class="card-header">
+            <%= link_to 'Add Users', users_new_path, class: 'btn btn-link' %>   
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new_user" id="button">Add New Users</button>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>No.</td>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <% @users.each.with_index do |item, index| %>
+                        <tr>
+                            <td>
+                                <%= "#{index+1}." %>
+                            </td>
+                            <td>
+                                <%= item.name %>
+                            </td>
+                            <td>
+                                <%= item.phone_number %>
+                            </td>
+                            <td>
+                                <%= item.address %>
+                            </td>
+                            <td>
+                                <%= link_to 'Edit', users_edit_path(:id=>item.id), class: "btn btn-warning" %>
+                                <%= link_to 'Delete', users_destroy_path(:id=>item.id), class: "btn btn-danger" %>
+                            </td>
+                        </tr>
+                    <%end%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="new_user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Add New Users</h4>
+        <button type="button" class="close" data-dismiss="modal"aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_tag({:action=>'index'},{:method=>'post', :id=>'form_new_user'}) do %>
+            <div class="form-group">
+                <%= label_tag(:name, 'User Name') %>
+                <%= text_field_tag(:name, '', class: 'form-control', placeholder: 'User Name') %>
+            </div>
+            <div class="form-group">
+                <%= label_tag(:phone_number, "Phone Number") %>
+                <%= text_field_tag(:phone_number, '', class: 'form-control', placeholder: 'Phone Number') %>
+            </div>
+            <div class="form-group">
+                <%= label_tag(:address, 'Address') %>
+                <%= text_area_tag(:address, '', class: 'form-control') %>
+            </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default"data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary info" id="submit_new_user">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

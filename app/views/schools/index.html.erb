@@ -1,0 +1,75 @@
+<%= render 'templates/navigation' %>
+<div class="container p-4">
+    <h2>Data SChools</h2>
+    <div class="card">
+        <div class="card-header">  
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new_school" id="button">Add New School</button>
+        </div>
+        <div class="card-body">
+            <table class="table table_schools">
+                <thead>
+                <tr>
+                    <th>No.</td>
+                    <th>School ID</th>
+                    <th>School Name</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <% @schools.each.with_index do |item, index| %>
+                        <tr class="tr">
+                            <td>
+                                <%= "#{index+1}." %>
+                            </td>
+                            <td>
+                                <%= item.school_number %>
+                            </td>
+                            <td>
+                                <%= item.name %>
+                            </td>
+                            <td>
+                                <%= item.address %>
+                            </td>
+                            <td>
+                                <button id="delete" data-id="<%= item.id %>" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    <%end%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="new_school" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Add New schools</h4>
+        <button type="button" class="close" data-dismiss="modal"aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_tag({:action=>'index'},{:method=>'post', :id=>'form_new_school'}) do %>
+            <div class="form-group">
+                <%= label_tag(:school_number, "School ID") %>
+                <%= text_field_tag(:school_number, '', class: 'form-control', placeholder: 'School ID') %>
+            </div>
+            <div class="form-group">
+                <%= label_tag(:name, 'School Name') %>
+                <%= text_field_tag(:name, '', class: 'form-control', placeholder: 'School Name') %>
+            </div>
+            <div class="form-group">
+                <%= label_tag(:address, 'Address') %>
+                <%= text_area_tag(:address, '', class: 'form-control') %>
+            </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default"data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary info" id="submit_new_school">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
